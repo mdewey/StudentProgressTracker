@@ -7,6 +7,7 @@ import HeyWorld from './pages/_template/HeyWorld'
 import NotFound from './pages/NotFound'
 import PullCohorts from './pages/PullCohorts'
 import './custom.scss'
+import PullStudents from './pages/PullStudents'
 export default class App extends Component {
   static displayName = App.name
 
@@ -18,6 +19,7 @@ export default class App extends Component {
           <Route exact path="/counter" component={HelloWorld} />
           <Route exact path="/typescript" component={HeyWorld} />
           <Route exact path="/pull/cohorts" component={PullCohorts} />
+          <Route exact path="/pull/students" component={PullStudents} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </Layout>

@@ -67,6 +67,11 @@ export class NavMenu extends Component {
                     Pull Cohorts
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/pull/students">
+                    Pull Students
+                  </NavLink>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>
