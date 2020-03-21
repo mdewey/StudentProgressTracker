@@ -17,6 +17,7 @@ const PullStudents = () => {
   useEffect(() => {
     getSLTCohorts()
   }, [])
+
   return (
     <div>
       <h1>Pull over all Students</h1>

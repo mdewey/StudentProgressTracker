@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,8 +53,19 @@ namespace StudentLifeTracker.Controllers
       {
         return NotFound();
       }
+      var response = await client.GetAsync($"{BASE_URL}/cohorts/{cohort.PylonId}?include=people");
+      response.EnsureSuccessStatusCode();
+      var data = await response.Content.ReadAsStringAsync();
+      using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+      var root = jsonDoc.RootElement;
+      var included = root.GetProperty("included");
 
-      return Ok();
+      foreach (var student in included.EnumerateArray())
+      {
+        Console.WriteLine($"{student}");
+
+      }
+      return Ok(data);
     }
 
   }
