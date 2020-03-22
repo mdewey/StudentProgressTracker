@@ -60,11 +60,31 @@ namespace StudentLifeTracker.Controllers
       var root = jsonDoc.RootElement;
       var included = root.GetProperty("included");
 
-      foreach (var student in included.EnumerateArray())
+      foreach (var person in included.EnumerateArray())
       {
-        Console.WriteLine($"{student}");
+        Console.WriteLine($"{person}");
+        var attributes = person.GetProperty("attributes");
+        var student = new Student
+        {
+          FullName = attributes.GetProperty("full_name").GetString(),
+          GitHub = attributes.GetProperty("github").GetString(),
+          PylonId = int.Parse(person.GetProperty("id").GetString())
+        };
 
+        var exists = _context.Students.FirstOrDefault(f => f.PylonId == student.PylonId);
+        if (exists == null)
+        {
+          _context.Students.Add(student);
+          var progress = new StudentProgress
+          {
+            CohortId = cohort.Id,
+            Student = student
+          };
+          _context.StudentProgresses.Add(progress);
+        }
       }
+
+      await _context.SaveChangesAsync();
       return Ok(data);
     }
 
