@@ -8,6 +8,7 @@ const Home = () => {
   const getAllCohorts = async () => {
     const resp = await axios.get('/api/cohort')
     setAllCohorts(resp.data)
+    // NEXT: CONTINUE THE DASHBOARD
   }
 
   useEffect(() => {
