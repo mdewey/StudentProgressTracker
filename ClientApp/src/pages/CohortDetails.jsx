@@ -6,6 +6,7 @@ const CohortDetails = props => {
   const getCohortData = async () => {
     const resp = await axios.get('/api/cohort/' + cohortId)
     console.log(resp.data)
+    // NEXT: Display cohort data and get all the students as well
   }
   useEffect(() => {
     console.log(cohortId)
