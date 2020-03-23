@@ -41,6 +41,20 @@ namespace StudentLifeTracker.Controllers
       return student;
     }
 
+    // GET: api/Student/5
+    [HttpGet("{id}/data")]
+    public async Task<ActionResult<Student>> GetStudentData(int id)
+    {
+      var student = await _context.Students.Include(i => i.StudentProgresses).FirstOrDefaultAsync(f => f.Id == id);
+
+      if (student == null)
+      {
+        return NotFound();
+      }
+
+      return student;
+    }
+
     // PUT: api/Student/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see https://aka.ms/RazorPagesCRUD.

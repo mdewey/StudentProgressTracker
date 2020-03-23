@@ -11,7 +11,6 @@ const CohortDetails = props => {
     console.log(resp.data)
     setCohort(resp.data.cohort)
     setStudents(resp.data.students)
-    // NEXT: Display cohort data and get all the students as well
   }
   useEffect(() => {
     console.log(cohortId)
