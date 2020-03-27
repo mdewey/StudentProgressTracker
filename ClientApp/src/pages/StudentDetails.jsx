@@ -1,7 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
+import Paper from '@material-ui/core/Paper'
+import Chip from '@material-ui/core/Chip'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import { makeStyles } from '@material-ui/core/styles'
+import LinearProgress from '@material-ui/core/LinearProgress'
+const useStyles = makeStyles(theme => ({
+  section: {
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+  },
+}))
+
 const StudentDetails = props => {
+  const classes = useStyles()
+
   const [student, setStudent] = useState({})
   const [report, setReport] = useState({})
   const [isChangePending, setIsChangePending] = useState(false)
@@ -56,74 +73,113 @@ const StudentDetails = props => {
   }, [report, isChangePending])
 
   return (
-    <div>
+    <>
       <section>
-        <h1>{student.fullName}</h1>
-        <section>
-          <p>github: {student.gitHub}</p>
-          <p>{student.pylonId}</p>
-        </section>
+        {!isChangePending || <LinearProgress color="secondary" />}
       </section>
-      <section>{isChangePending ? 'changes pending' : 'up to date'}</section>
-      <section className="reports">
-        {/* has1On1: false */}
+      <div>
+        <br />
         <section>
-          halfway 1 on 1 :{' '}
-          <input
-            type="checkbox"
-            value={report.has1On1}
-            checked={report.has1On1 ?? 'checked'}
-            onChange={e => updateCheckBox(e, 'has1On1')}
-          />
+          <h1>{student.fullName}</h1>
+          <nav className="student-nav">
+            <Chip
+              label={student.gitHub}
+              component="a"
+              href={`https://www.github.com/${student.gitHub}`}
+              clickable
+            />
+            <Chip
+              label={'nexus'}
+              component="a"
+              href={`https://nexus.suncoast.io/people/${student.pylonId}/gradebook`}
+              clickable
+            />
+          </nav>
         </section>
-        <section>
-          <header>Capstone</header>
-          {/* capstoneHasBeenApproved: false */}
-          <section>
-            is Approved:{' '}
+
+        <section className="reports">
+          {/* has1On1: false */}
+          <Paper elevation={3} className={classes.section}>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="checkedA"
+                    value={report.has1On1}
+                    checked={report.has1On1 ?? 'checked'}
+                    onChange={e => updateCheckBox(e, 'has1On1')}
+                  />
+                }
+                label="halfway 1 on 1"
+              />
+            </FormGroup>
+          </Paper>
+          <Paper elevation={3} className={classes.section}>
+            <header>Capstone</header>
+            {/* capstoneHasBeenApproved: false */}
+            <section>
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={report.capstoneHasBeenApproved}
+                      checked={report.capstoneHasBeenApproved ?? 'checked'}
+                      onChange={e =>
+                        updateCheckBox(e, 'capstoneHasBeenApproved')
+                      }
+                    />
+                  }
+                  label="is Approved"
+                />
+              </FormGroup>
+            </section>
+            <section>
+              {/* capstoneIdea: null */}
+
+              <h5>Idea</h5>
+
+              <TextareaAutosize
+                aria-label="capstone label"
+                rowsMin={3}
+                placeholder="No idea yet...."
+                value={report.capstoneIdea}
+                onChange={e => updateTextArea(e, 'capstoneIdea')}
+                onBlur={e => textBoxBlur(e, 'capstoneIdea')}
+              />
+            </section>
+            <section>
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={report.turnedInWireFrames}
+                      checked={report.turnedInWireFrames ?? 'checked'}
+                      onChange={e => updateCheckBox(e, 'turnedInWireFrames')}
+                    />
+                  }
+                  label="turned In Wire Frames"
+                />
+              </FormGroup>
+            </section>
+          </Paper>
+          <Paper elevation={3} className={classes.section}>
+            {/* concernedLevel: 0 */}
+            <h5>Concerned Level: {report.concernedLevel}/10</h5>
+
             <input
-              type="checkbox"
-              value={report.capstoneHasBeenApproved}
-              checked={report.capstoneHasBeenApproved ?? 'checked'}
-              onChange={e => updateCheckBox(e, 'capstoneHasBeenApproved')}
+              type="range"
+              name=""
+              id=""
+              value={report.concernedLevel}
+              onChange={e => slideChange(e, 'concernedLevel')}
+              min={0}
+              max={10}
             />
-          </section>
-          <section>
-            {/* capstoneIdea: null */}
-            Idea:
-            <textarea
-              value={report.capstoneIdea}
-              onChange={e => updateTextArea(e, 'capstoneIdea')}
-              onBlur={e => textBoxBlur(e, 'capstoneIdea')}
-            />
-          </section>
-          <section>
-            {/* turnedInWireFrames: false */}
-            turned In Wire Frames
-            <input
-              type="checkbox"
-              value={report.turnedInWireFrames}
-              checked={report.turnedInWireFrames ?? 'checked'}
-              onChange={e => updateCheckBox(e, 'turnedInWireFrames')}
-            />
-          </section>
+          </Paper>
+          {/* TODO: cohortId: 1 */}
         </section>
-        <section>
-          {/* concernedLevel: 0 */}
-          <header>Concerned Level: {report.concernedLevel}/10</header>
-          <input
-            type="range"
-            name=""
-            id=""
-            value={report.concernedLevel}
-            onChange={e => slideChange(e, 'concernedLevel')}
-            min={0}
-            max={10}
-          />
-        </section>
-        {/* TODO: cohortId: 1 */}
-      </section>
-    </div>
+      </div>
+    </>
   )
 }
 

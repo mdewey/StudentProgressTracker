@@ -12,3 +12,12 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.student-nav {
+  display: flex;
+  width: 50%;
+  a {
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+}
