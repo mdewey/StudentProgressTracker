@@ -19,7 +19,7 @@ namespace StudentLifeTracker.Models
     public Student Student { get; set; }
     public int CohortId { get; set; }
 
-    [JsonIgnore]
+
     public Cohort Cohort { get; set; }
 
   }

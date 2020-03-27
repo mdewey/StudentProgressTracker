@@ -47,6 +47,8 @@ namespace StudentLifeTracker.Controllers
     {
       var student = await _context.Students.Include(i => i.StudentProgresses).FirstOrDefaultAsync(f => f.Id == id);
 
+
+
       if (student == null)
       {
         return NotFound();
