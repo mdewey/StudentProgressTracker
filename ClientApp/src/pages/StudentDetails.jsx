@@ -9,6 +9,9 @@ import Checkbox from '@material-ui/core/Checkbox'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import Slider from '@material-ui/core/Slider'
+import Typography from '@material-ui/core/Typography'
+
 const useStyles = makeStyles(theme => ({
   section: {
     padding: theme.spacing(3),
@@ -40,9 +43,8 @@ const StudentDetails = props => {
     setReport(prev => ({ ...prev, [key]: e.target.checked }))
     setIsChangePending(true)
   }
-  const slideChange = (e, key) => {
-    e.persist()
-    setReport(prev => ({ ...prev, [key]: parseInt(e.target.value) }))
+  const slideChange = (value, key) => {
+    setReport(prev => ({ ...prev, [key]: parseInt(value) }))
     setIsChangePending(true)
   }
 
@@ -106,7 +108,7 @@ const StudentDetails = props => {
                   <Checkbox
                     name="checkedA"
                     value={report.has1On1}
-                    checked={report.has1On1 ?? 'checked'}
+                    checked={report.has1On1 ?? true}
                     onChange={e => updateCheckBox(e, 'has1On1')}
                   />
                 }
@@ -123,7 +125,7 @@ const StudentDetails = props => {
                   control={
                     <Checkbox
                       value={report.capstoneHasBeenApproved}
-                      checked={report.capstoneHasBeenApproved ?? 'checked'}
+                      checked={report.capstoneHasBeenApproved ?? true}
                       onChange={e =>
                         updateCheckBox(e, 'capstoneHasBeenApproved')
                       }
@@ -142,7 +144,7 @@ const StudentDetails = props => {
                 aria-label="capstone label"
                 rowsMin={3}
                 placeholder="No idea yet...."
-                value={report.capstoneIdea}
+                value={report.capstoneIdea || ''}
                 onChange={e => updateTextArea(e, 'capstoneIdea')}
                 onBlur={e => textBoxBlur(e, 'capstoneIdea')}
               />
@@ -153,7 +155,7 @@ const StudentDetails = props => {
                   control={
                     <Checkbox
                       value={report.turnedInWireFrames}
-                      checked={report.turnedInWireFrames ?? 'checked'}
+                      checked={report.turnedInWireFrames ?? true}
                       onChange={e => updateCheckBox(e, 'turnedInWireFrames')}
                     />
                   }
@@ -163,16 +165,18 @@ const StudentDetails = props => {
             </section>
           </Paper>
           <Paper elevation={3} className={classes.section}>
-            {/* concernedLevel: 0 */}
-            <h5>Concerned Level: {report.concernedLevel}/10</h5>
-
-            <input
-              type="range"
-              name=""
-              id=""
+            <Typography id="concerned-slider" gutterBottom>
+              Concerned Level: {report.concernedLevel}/10
+            </Typography>
+            <Slider
+              aria-labelledby="concerned-slider"
               value={report.concernedLevel}
-              onChange={e => slideChange(e, 'concernedLevel')}
+              onChangeCommitted={(e, value) =>
+                slideChange(value, 'concernedLevel')
+              }
+              step={1}
               min={0}
+              marks
               max={10}
             />
           </Paper>
