@@ -23,6 +23,11 @@ const StudentDetails = props => {
     setReport(prev => ({ ...prev, [key]: e.target.checked }))
     setIsChangePending(true)
   }
+  const slideChange = (e, key) => {
+    e.persist()
+    setReport(prev => ({ ...prev, [key]: parseInt(e.target.value) }))
+    setIsChangePending(true)
+  }
 
   const saveProgressToServer = async (report, isChangePending) => {
     //put to server
@@ -105,12 +110,13 @@ const StudentDetails = props => {
         </section>
         <section>
           {/* concernedLevel: 0 */}
-          <header>Concerned Level</header>
+          <header>Concerned Level: {report.concernedLevel}/10</header>
           <input
             type="range"
             name=""
             id=""
             value={report.concernedLevel}
+            onChange={e => slideChange(e, 'concernedLevel')}
             min={0}
             max={10}
           />
