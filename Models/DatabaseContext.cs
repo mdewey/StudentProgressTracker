@@ -11,7 +11,7 @@ namespace StudentLifeTracker.Models
     public DbSet<Student> Students { get; set; }
     public DbSet<Cohort> Cohorts { get; set; }
     public DbSet<StudentProgress> StudentProgresses { get; set; }
-
+    public DbSet<Touchpoint> Touchpoints { get; set; }
 
     private string ConvertPostConnectionToConnectionString(string connection)
     {
