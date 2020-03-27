@@ -53,7 +53,11 @@ namespace StudentLifeTracker.Controllers
       }
 
       // get students based on this cohort
-      var students = _context.StudentProgresses.Include(i => i.Student).Where(w => w.CohortId == id).Select(s => s.Student);
+      var students = _context.StudentProgresses
+        .Include(i => i.Student)
+        .Where(w => w.CohortId == id)
+        .Select(s => new { s.Student.FullName, s.Student.Id, s.Student.GitHub, s.Student.PylonId, s.ConcernedLevel })
+        .OrderBy(o => o.FullName.Trim());
       return Ok(
           new
           {

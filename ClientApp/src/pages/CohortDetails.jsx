@@ -65,7 +65,7 @@ const CohortDetails = props => {
                 <TableCell>
                   <Avatar
                     alt={student.fullName}
-                    src={`https://api.adorable.io/avatars/200/${student.gitHub}`}
+                    src={`https://api.adorable.io/avatars/200/${Math.random()} `}
                   />
                 </TableCell>
                 <TableCell component="th" scope="row">
