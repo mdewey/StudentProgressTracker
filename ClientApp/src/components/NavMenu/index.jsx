@@ -41,7 +41,7 @@ export function NavMenu() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Reel
+            Distance Rodeo
           </Typography>
           <Link component={RouterLink} to="/" className="text-light nav-link ">
             Home
