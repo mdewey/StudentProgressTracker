@@ -43,16 +43,6 @@ namespace StudentLifeTracker
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
 
-      var settings = Configuration.AsEnumerable();
-      foreach (var setting in settings)
-      {
-
-        Console.WriteLine($"{setting.Key}={setting.Value}");
-
-
-      }
-
-
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
