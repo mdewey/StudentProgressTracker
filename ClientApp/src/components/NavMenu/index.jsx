@@ -8,75 +8,60 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap'
-import { Link } from 'react-router-dom'
 import './style.scss'
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name
+import { Link as RouterLink } from 'react-router-dom'
 
-  constructor(props) {
-    super(props)
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Link from '@material-ui/core/Link'
 
-    this.toggleNavbar = this.toggleNavbar.bind(this)
-    this.state = {
-      collapsed: true,
-    }
-  }
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}))
 
-  toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
-  }
+export function NavMenu() {
+  const classes = useStyles()
 
-  render() {
-    return (
-      <header>
-        <Navbar
-          className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
-          light
-        >
-          <Container>
-            <NavbarBrand tag={Link} to="/">
-              StudentLifeTracker
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse
-              className="d-sm-inline-flex flex-sm-row-reverse"
-              isOpen={!this.state.collapsed}
-              navbar
-            >
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">
-                    Counter
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/typescript">
-                    Typescript
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/pull/cohorts">
-                    Pull Cohorts
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/pull/students">
-                    Pull Students
-                  </NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    )
-  }
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Reel
+          </Typography>
+          <Link component={RouterLink} to="/" className="text-light nav-link ">
+            Home
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/pull/cohorts"
+            className="text-light nav-link"
+          >
+            Pull Cohorts
+          </Link>
+          <Link
+            component={RouterLink}
+            className="text-light nav-link"
+            to="/pull/students"
+          >
+            Pull Students
+          </Link>
+        </Toolbar>
+      </AppBar>
+    </div>
+  )
 }
