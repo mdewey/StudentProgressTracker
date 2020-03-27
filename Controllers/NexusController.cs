@@ -28,8 +28,9 @@ namespace StudentLifeTracker.Controllers
     public NexusController(IConfiguration configuration, DatabaseContext context)
     {
       _context = context;
-      var secret = configuration["SETTINGS:NEXUS_TOKEN"];
+      var secret = configuration["NEXUS_TOKEN"];
       this.TOKEN = $@"token=""{secret}""";
+
       client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", this.TOKEN);
     }
 

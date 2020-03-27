@@ -1,8 +1,8 @@
-docker build -t sdg-template-1-image .
+docker build -t sdg-student-tracker-image .
 
-docker tag sdg-template-1-image registry.heroku.com/sdg-template-1/web
+docker tag sdg-student-tracker-image registry.heroku.com/sdg-student-tracker/web
 
 
-docker push registry.heroku.com/sdg-template-1/web
+docker push registry.heroku.com/sdg-student-tracker/web
 
-heroku container:release web -a sdg-template-1
+heroku container:release web -a sdg-student-tracker

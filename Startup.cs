@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StudentLifeTracker.Models;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace StudentLifeTracker
 {
@@ -32,15 +33,26 @@ namespace StudentLifeTracker
         configuration.RootPath = "ClientApp/build";
       });
       services.AddSwaggerGen(c =>
-{
-  c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-});
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+      });
       services.AddDbContext<DatabaseContext>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+
+      var settings = Configuration.AsEnumerable();
+      foreach (var setting in settings)
+      {
+
+        Console.WriteLine($"{setting.Key}={setting.Value}");
+
+
+      }
+
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
