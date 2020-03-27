@@ -18,9 +18,9 @@ const StudentDetails = props => {
     getStudentData()
   }, [])
 
-  const update1on1 = async e => {
+  const updateCheckBox = (e, key) => {
     e.persist()
-    setReport(prev => ({ ...prev, has1On1: e.target.checked }))
+    setReport(prev => ({ ...prev, [key]: e.target.checked }))
     setIsChangePending(true)
   }
 
@@ -33,6 +33,17 @@ const StudentDetails = props => {
         setIsChangePending(false)
       }
     }
+  }
+
+  const updateTextArea = (e, key) => {
+    e.persist()
+    setReport(prev => ({ ...prev, [key]: e.target.value }))
+  }
+
+  const textBoxBlur = (e, key) => {
+    e.persist()
+    setReport(prev => ({ ...prev, [key]: e.target.value }))
+    setIsChangePending(true)
   }
 
   useEffect(() => {
@@ -48,7 +59,7 @@ const StudentDetails = props => {
           <p>{student.pylonId}</p>
         </section>
       </section>
-      <section>{isChangePending ? 'not saved' : 'saved'}</section>
+      <section>{isChangePending ? 'changes pending' : 'up to date'}</section>
       <section className="reports">
         {/* has1On1: false */}
         <section>
@@ -57,7 +68,7 @@ const StudentDetails = props => {
             type="checkbox"
             value={report.has1On1}
             checked={report.has1On1 ?? 'checked'}
-            onChange={e => update1on1(e)}
+            onChange={e => updateCheckBox(e, 'has1On1')}
           />
         </section>
         <section>
@@ -65,17 +76,31 @@ const StudentDetails = props => {
           {/* capstoneHasBeenApproved: false */}
           <section>
             is Approved:{' '}
-            <input type="checkbox" value={report.capstoneHasBeenApproved} />
+            <input
+              type="checkbox"
+              value={report.capstoneHasBeenApproved}
+              checked={report.capstoneHasBeenApproved ?? 'checked'}
+              onChange={e => updateCheckBox(e, 'capstoneHasBeenApproved')}
+            />
           </section>
           <section>
             {/* capstoneIdea: null */}
             Idea:
-            <input type="text" value={report.capstoneIdea} />
+            <textarea
+              value={report.capstoneIdea}
+              onChange={e => updateTextArea(e, 'capstoneIdea')}
+              onBlur={e => textBoxBlur(e, 'capstoneIdea')}
+            />
           </section>
           <section>
             {/* turnedInWireFrames: false */}
             turned In Wire Frames
-            <input type="checkbox" value={report.turnedInWireFrames} />
+            <input
+              type="checkbox"
+              value={report.turnedInWireFrames}
+              checked={report.turnedInWireFrames ?? 'checked'}
+              onChange={e => updateCheckBox(e, 'turnedInWireFrames')}
+            />
           </section>
         </section>
         <section>
