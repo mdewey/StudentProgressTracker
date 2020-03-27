@@ -2,9 +2,20 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import { createBrotliCompress } from 'zlib'
-import CohortLink from '../components/CohortLink'
+import CohortCard from '../components/CohortCard'
+
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+}))
 
 const Home = () => {
+  const classes = useStyles()
   const [currentCohorts, setCurrentCohorts] = useState([])
   const [allCohorts, setAllCohorts] = useState([])
 
@@ -23,21 +34,27 @@ const Home = () => {
 
   return (
     <div>
+      <br />
       <section>
-        <header>Current Cohorts</header>
-        <ul>
-          {currentCohorts.map(cohort => {
-            return <CohortLink key={cohort.id} cohort={cohort} />
-          })}
-        </ul>
+        <h2>Current Cohorts</h2>
+        <hr />
+        {currentCohorts.map(cohort => {
+          return <CohortCard key={cohort.id} cohort={cohort} />
+        })}
+        <br />
       </section>
-      <section>
-        <header>All Cohorts</header>
-        <ul>
+      <section className={classes.root}>
+        <h3>All Cohorts</h3>
+        <hr />
+        <Grid container spacing={3}>
           {allCohorts.map(cohort => {
-            return <CohortLink key={cohort.id} cohort={cohort} />
+            return (
+              <Grid item xs>
+                <CohortCard key={cohort.id} cohort={cohort} />
+              </Grid>
+            )
           })}
-        </ul>
+        </Grid>
       </section>
     </div>
   )
