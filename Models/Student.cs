@@ -11,7 +11,7 @@ namespace StudentLifeTracker.Models
     public string Email { get; set; }
 
     public List<StudentProgress> StudentProgresses { get; set; } = new List<StudentProgress>();
-    public List<Touchpoint> Touchpoints { get; set; } = new List<Touchpoint>();
+    public List<TouchPoint> Touchpoints { get; set; } = new List<TouchPoint>();
 
   }
 }

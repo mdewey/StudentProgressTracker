@@ -43,18 +43,22 @@ namespace StudentLifeTracker.Controllers
 
     // GET: api/Student/5
     [HttpGet("{id}/data")]
-    public async Task<ActionResult<Student>> GetStudentData(int id)
+    public async Task<ActionResult> GetStudentData(int id)
     {
-      var student = await _context.Students.Include(i => i.StudentProgresses).FirstOrDefaultAsync(f => f.Id == id);
+      var student = await _context
+        .Students
+        .Include(i => i.StudentProgresses)
 
+        .FirstOrDefaultAsync(f => f.Id == id);
 
+      var touchPoints = _context.TouchPoints.Where(w => w.StudentId == id).OrderByDescending(o => o.Timestamp);
 
       if (student == null)
       {
         return NotFound();
       }
 
-      return student;
+      return Ok(new { student, touchPoints });
     }
 
     // PUT: api/Student/5
@@ -90,8 +94,6 @@ namespace StudentLifeTracker.Controllers
     }
 
     // POST: api/Student
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-    // more details see https://aka.ms/RazorPagesCRUD.
     [HttpPost]
     public async Task<ActionResult<Student>> PostStudent(Student student)
     {
@@ -99,6 +101,17 @@ namespace StudentLifeTracker.Controllers
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetStudent", new { id = student.Id }, student);
+    }
+
+
+    [HttpPost("{studentId}/touchpoint")]
+    public async Task<ActionResult<Student>> AddTouchpointForStudent(int studentId, TouchPoint touchpoint)
+    {
+      touchpoint.StudentId = studentId;
+      _context.TouchPoints.Add(touchpoint);
+      await _context.SaveChangesAsync();
+
+      return Ok(touchpoint);
     }
 
     // DELETE: api/Student/5
