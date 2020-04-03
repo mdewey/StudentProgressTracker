@@ -7,6 +7,7 @@ import CohortCard from '../components/CohortCard'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import auth from '../Auth'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +21,7 @@ const Home = () => {
   const [allCohorts, setAllCohorts] = useState([])
 
   const getAllCohorts = async () => {
-    const resp = await axios.get('/api/cohort')
+    const resp = await axios.get('/api/cohort', auth.getHeader())
     setAllCohorts(resp.data)
     const current = resp.data.filter(cohort => {
       return moment().isBetween(cohort.startDate, cohort.endDate)

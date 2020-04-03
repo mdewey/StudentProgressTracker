@@ -21,6 +21,14 @@ class Auth {
     window.location = '/'
   }
 
+  getHeader = () => {
+    return {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+    }
+  }
+
   get isAuthenticated() {
     const jwt = localStorage.getItem('jwt')
 

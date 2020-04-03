@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 
 import Button from '@material-ui/core/Button'
+import auth from '../Auth'
 
 const useStyles = makeStyles(theme => ({
   section: {
@@ -40,7 +41,10 @@ const StudentDetails = props => {
   const { studentId } = props.match.params
 
   const getStudentData = async () => {
-    const resp = await axios.get(`/api/student/${studentId}/data`)
+    const resp = await axios.get(
+      `/api/student/${studentId}/data`,
+      auth.getHeader()
+    )
     console.log(resp.data)
     setStudent({ ...resp.data.student, studentProgresses: null })
     setReport(resp.data.student.studentProgresses[0])
@@ -65,7 +69,11 @@ const StudentDetails = props => {
     //put to server
     if (report.id && isChangePending) {
       console.log('updating')
-      const resp = await axios.put(`/api/progress/${report.id}`, report)
+      const resp = await axios.put(
+        `/api/progress/${report.id}`,
+        report,
+        auth.getHeader()
+      )
       if (resp.status === 204) {
         setIsChangePending(false)
       }
@@ -88,9 +96,13 @@ const StudentDetails = props => {
     if (newTouchPoint) {
       setIsChangePending(true)
 
-      const resp = await axios.post(`/api/student/${student.id}/touchpoint`, {
-        description: newTouchPoint,
-      })
+      const resp = await axios.post(
+        `/api/student/${student.id}/touchpoint`,
+        {
+          description: newTouchPoint,
+        },
+        auth.getHeader()
+      )
       if (resp.status === 200) {
         setIsChangePending(false)
         setTouchPoints([resp.data, ...touchPoints])

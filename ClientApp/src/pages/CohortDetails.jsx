@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import { Link } from 'react-router-dom'
-
+import auth from '../Auth'
 const useStyles = makeStyles({
   table: {
     width: '100%',
@@ -36,7 +36,10 @@ const CohortDetails = props => {
   const [cohort, setCohort] = useState({})
   const [students, setStudents] = useState([])
   const getCohortData = async () => {
-    const resp = await axios.get(`/api/cohort/${cohortId}/data`)
+    const resp = await axios.get(
+      `/api/cohort/${cohortId}/data`,
+      auth.getHeader()
+    )
     console.log(resp.data)
     setCohort(resp.data.cohort)
     setStudents(resp.data.students)
