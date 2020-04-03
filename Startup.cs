@@ -38,12 +38,7 @@ namespace StudentLifeTracker
       });
       services.AddDbContext<DatabaseContext>();
 
-      services.AddAuthentication(JwtBearerDefaults)
-            .AddGitHub(options =>
-            {
-              options.ClientId = "XXXX";
-              options.ClientSecret = "XXXXX";
-            });
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
