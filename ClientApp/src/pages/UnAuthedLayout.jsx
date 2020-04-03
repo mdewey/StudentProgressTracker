@@ -41,9 +41,6 @@ const UnAuthedLayout = () => {
             <Typography gutterBottom variant="h5" component="h2">
               SDG Student Tracker
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Tool that helps the Instructor track their students
-            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
