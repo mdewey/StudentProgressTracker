@@ -61,6 +61,13 @@ export function NavMenu() {
           >
             Pull Students
           </Link>
+          <Link
+            component={RouterLink}
+            className="text-light nav-link"
+            to="/admin/users"
+          >
+            Admin
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
