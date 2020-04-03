@@ -44,13 +44,6 @@ export function NavMenu() {
             Distance Rodeo
           </Typography>
 
-          <Link
-            component={RouterLink}
-            to="/login"
-            className="text-light nav-link "
-          >
-            Login
-          </Link>
           <Link component={RouterLink} to="/" className="text-light nav-link ">
             Home
           </Link>

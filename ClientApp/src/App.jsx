@@ -9,12 +9,32 @@ import PullStudents from './pages/PullStudents'
 import CohortDetails from './pages/CohortDetails'
 import StudentDetails from './pages/StudentDetails'
 import Empty from './pages/Empty'
+import UnAuthedLayout from './pages/UnAuthedLayout'
 import auth from './Auth'
+
+const CallBackRoute = () => (
+  <Route
+    exact
+    path="/callback/:jwt"
+    render={props => {
+      auth.handleAuthentication(props.match.params.jwt)
+      return <Empty />
+    }}
+  />
+)
 
 export default class App extends Component {
   static displayName = App.name
 
   render() {
+    if (!auth.isAuthenticated) {
+      return (
+        <Switch>
+          <Route exact path="/" component={UnAuthedLayout} />
+          <CallBackRoute />
+        </Switch>
+      )
+    }
     return (
       <Layout>
         <Switch>
@@ -23,20 +43,14 @@ export default class App extends Component {
           <Route exact path="/student/:studentId" component={StudentDetails} />
           <Route exact path="/pull/cohorts" component={PullCohorts} />
           <Route exact path="/pull/students" component={PullStudents} />
-          {/* auth stuff */}dot
+          {/* auth stuff */}
+          <CallBackRoute />
+
           <Route
             exact
             path="/login"
             render={() => {
               auth.login()
-              return <Empty />
-            }}
-          />
-          <Route
-            exact
-            path="/callback/:jwt"
-            render={props => {
-              auth.handleAuthentication(props.match.params.jwt)
               return <Empty />
             }}
           />
