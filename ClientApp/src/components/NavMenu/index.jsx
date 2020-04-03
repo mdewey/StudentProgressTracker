@@ -43,7 +43,15 @@ export function NavMenu() {
           <Typography variant="h6" className={classes.title}>
             Distance Rodeo
           </Typography>
-          <Link component={RouterLink} to="/" className="text-light nav-link ">
+
+          <Link
+            component={RouterLink}
+            to="/login"
+            className="text-light nav-link "
+          >
+            Login
+          </Link>
+          <Link component={RouterLink} className="text-light nav-link ">
             Home
           </Link>
           <Link
