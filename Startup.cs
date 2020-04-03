@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using StudentLifeTracker.Models;
 using Microsoft.OpenApi.Models;
 using System;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace StudentLifeTracker
 {
@@ -37,7 +40,20 @@ namespace StudentLifeTracker
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
       });
       services.AddDbContext<DatabaseContext>();
+      services.AddSingleton<Services.AuthService>();
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                     .AddJwtBearer(options =>
+                     {
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                         ValidateIssuer = false,
+                         ValidateAudience = false,
+                         ValidateLifetime = true,
+                         ValidateIssuerSigningKey = true,
 
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT_SECRET"]))
+                       };
+                     });
 
     }
 
@@ -69,7 +85,8 @@ namespace StudentLifeTracker
 
       });
       app.UseRouting();
-
+      app.UseAuthorization();
+      app.UseAuthentication();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(
