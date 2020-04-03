@@ -13,6 +13,8 @@ namespace StudentLifeTracker.Models
     public DbSet<StudentProgress> StudentProgresses { get; set; }
     public DbSet<TouchPoint> TouchPoints { get; set; }
 
+    public DbSet<PylonUser> PylonUsers { get; set; }
+
     private string ConvertPostConnectionToConnectionString(string connection)
     {
       var _connection = connection.Replace("postgres://", String.Empty);
