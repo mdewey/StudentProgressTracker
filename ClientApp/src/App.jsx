@@ -12,6 +12,7 @@ import Empty from './pages/Empty'
 import UnAuthedLayout from './pages/UnAuthedLayout'
 import auth from './Auth'
 import NoAuthed from './pages/NoAuthed'
+import Admin from './pages/Admin'
 
 const CallBackRoute = () => (
   <Route
@@ -45,6 +46,7 @@ export default class App extends Component {
           <Route exact path="/student/:studentId" component={StudentDetails} />
           <Route exact path="/pull/cohorts" component={PullCohorts} />
           <Route exact path="/pull/students" component={PullStudents} />
+          <Route exact path="/admin/users" component={Admin} />
           {/* auth stuff */}
           <CallBackRoute />
 
