@@ -60,7 +60,8 @@ const StudentDetails = props => {
     setReport(prev => ({ ...prev, [key]: e.target.checked }))
     setIsChangePending(true)
   }
-  const slideChange = (value, key) => {
+  const slideChange = (e, key) => {
+    const { value } = e.target
     setReport(prev => ({ ...prev, [key]: parseInt(value) }))
     setIsChangePending(true)
   }
