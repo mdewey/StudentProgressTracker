@@ -10,6 +10,7 @@ import CohortDetails from './pages/CohortDetails'
 import StudentDetails from './pages/StudentDetails'
 import Empty from './pages/Empty'
 import auth from './Auth'
+
 export default class App extends Component {
   static displayName = App.name
 
@@ -22,8 +23,7 @@ export default class App extends Component {
           <Route exact path="/student/:studentId" component={StudentDetails} />
           <Route exact path="/pull/cohorts" component={PullCohorts} />
           <Route exact path="/pull/students" component={PullStudents} />
-          {/* auth stuff */}
-
+          {/* auth stuff */}dot
           <Route
             exact
             path="/login"
@@ -32,7 +32,6 @@ export default class App extends Component {
               return <Empty />
             }}
           />
-
           <Route
             exact
             path="/callback/:jwt"

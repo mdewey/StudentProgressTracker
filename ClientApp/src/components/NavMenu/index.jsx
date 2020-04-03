@@ -51,7 +51,7 @@ export function NavMenu() {
           >
             Login
           </Link>
-          <Link component={RouterLink} className="text-light nav-link ">
+          <Link component={RouterLink} to="/" className="text-light nav-link ">
             Home
           </Link>
           <Link
