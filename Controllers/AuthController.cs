@@ -27,6 +27,7 @@ namespace StudentLifeTracker.Controllers
       var token = this.authService.CreateJwt(new Dictionary<string, string>{
           {"jwt", jwt}
       });
+      return Redirect($"/callback/{token}");
       //   return Ok(new
       //   {
       //     jwt,
