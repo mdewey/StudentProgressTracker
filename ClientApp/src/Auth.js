@@ -6,17 +6,17 @@ class Auth {
   }
 
   get token() {
-    return localStorage.getItem('jwt')
+    return sessionStorage.getItem('jwt')
   }
 
   handleAuthentication = jwt => {
-    localStorage.setItem('jwt', jwt)
+    sessionStorage.setItem('jwt', jwt)
 
     window.location = '/'
   }
 
   logout = () => {
-    localStorage.removeItem('jwt')
+    sessionStorage.removeItem('jwt')
 
     window.location = '/'
   }
@@ -24,13 +24,13 @@ class Auth {
   getHeader = () => {
     return {
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
       },
     }
   }
 
   get isAuthenticated() {
-    const jwt = localStorage.getItem('jwt')
+    const jwt = sessionStorage.getItem('jwt')
 
     return !!jwt
   }

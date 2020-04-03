@@ -39,10 +39,12 @@ namespace StudentLifeTracker.Controllers
 
       isAllowed = user == null ? false : user.Allowed;
 
-
       if (isAllowed)
       // take JWT, create my own JWT with that as the claim
       {
+        user.LastLoggedIn = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+
         var token = this._authService.CreateJwt(new Dictionary<string, string>{
           {"jwt", jwt}
         });
@@ -59,12 +61,6 @@ namespace StudentLifeTracker.Controllers
         await _context.SaveChangesAsync();
         return Redirect($"/nope");
       }
-      //   return Ok(new
-      //   {
-      //     jwt,
-      //     token
-      //   });
-
     }
   }
 }
