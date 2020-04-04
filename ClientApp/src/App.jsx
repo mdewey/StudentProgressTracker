@@ -13,6 +13,8 @@ import UnAuthedLayout from './pages/UnAuthedLayout'
 import auth from './Auth'
 import NoAuthed from './pages/NoAuthed'
 import Admin from './pages/Admin'
+import AuthenticatedPage from './utils/AuthenticatedPage'
+import withAuth from './utils/AuthenticatedPage'
 
 const CallBackRoute = () => (
   <Route
@@ -35,6 +37,7 @@ export default class App extends Component {
           <Route exact path="/" component={UnAuthedLayout} />
           <Route exact path="/nope" component={NoAuthed} />
           <CallBackRoute />
+          <Route path="*" component={NotFound} />
         </Switch>
       )
     }
