@@ -9,8 +9,9 @@ using StudentLifeTracker.Models;
 using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 namespace StudentLifeTracker
 {
