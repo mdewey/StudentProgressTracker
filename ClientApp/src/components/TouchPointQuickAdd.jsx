@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     height: '0.25rem',
   },
 })
+
 const TouchPointQuickAdd = ({ cohort, students = [] }) => {
   const classes = useStyles()
   const [studentId, setStudentId] = useState()
