@@ -25,7 +25,7 @@ const CohortCard = ({ cohort }) => {
 
   return (
     <>
-      <Link to={`/cohort/${cohort.id}`} className="cohort-card">
+      <Link to={`/cohort/${cohort.id}/dashboard`} className="cohort-card">
         <Card className={classes.root}>
           <CardActionArea>
             <CardMedia

@@ -15,6 +15,7 @@ import NoAuthed from './pages/NoAuthed'
 import Admin from './pages/Admin'
 import AuthenticatedPage from './utils/AuthenticatedPage'
 import withAuth from './utils/AuthenticatedPage'
+import CohortDashboard from './pages/CohortDashboard'
 
 const CallBackRoute = () => (
   <Route
@@ -46,6 +47,11 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/cohort/:cohortId" component={CohortDetails} />
+          <Route
+            exact
+            path="/cohort/:cohortId/dashboard"
+            component={CohortDashboard}
+          />
           <Route exact path="/student/:studentId" component={StudentDetails} />
           <Route exact path="/pull/cohorts" component={PullCohorts} />
           <Route exact path="/pull/students" component={PullStudents} />
