@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import { Link } from 'react-router-dom'
 import auth from '../Auth'
 import TouchPointQuickAdd from '../components/TouchPointQuickAdd'
+import StudentSearch from '../components/StudentSearch'
 const useStyles = makeStyles({
   table: {
     width: '100%',
@@ -38,15 +39,18 @@ const CohortDashboard = props => {
         <Grid item sm={6}>
           <TouchPointQuickAdd students={students} />
         </Grid>
+        <Grid item sm={6}>
+          <StudentSearch students={students} />
+        </Grid>
       </Grid>
-      <section>
+      {/* <section>
         Details
         <section>Touch points over 48 hours ago</section>
         <section>
           <h3>total today</h3>5 most recent touch points
         </section>
         <section>top concerned students</section>
-      </section>
+      </section> */}
     </>
   )
 }
