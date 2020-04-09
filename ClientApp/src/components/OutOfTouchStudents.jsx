@@ -21,9 +21,6 @@ const useStyles = makeStyles({
     justifyContent: 'center',
   },
 })
-function ListItemLink(props) {
-  return <ListItem button component="Link" {...props} />
-}
 
 const OutOfTouchStudents = ({ cohort = {} }) => {
   const classes = useStyles()
@@ -52,14 +49,14 @@ const OutOfTouchStudents = ({ cohort = {} }) => {
             <List component="nav" aria-label="secondary mailbox folders">
               {students.map(student => {
                 return (
-                  <>
-                    <ListItem button>
-                      <ListItemText primary="Trash" />
-                    </ListItem>
-                    <ListItemLink to={`/student/${student.id}`}>
-                      <ListItemText primary={student.fullName} />
-                    </ListItemLink>
-                  </>
+                  <ListItem
+                    button
+                    key={student.id}
+                    component="a"
+                    href={`/student/${student.id}`}
+                  >
+                    <ListItemText primary={student.fullName} />
+                  </ListItem>
                 )
               })}
             </List>
