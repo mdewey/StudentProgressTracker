@@ -68,8 +68,39 @@ namespace StudentLifeTracker.Controllers
             students
           }
       );
+    }
+
+    [HttpGet("{id}/concerned")]
+    public async Task<ActionResult<Cohort>> GetConcernedStudents(int id)
+    {
+      var cohort = await _context.Cohorts.FirstOrDefaultAsync(f => f.Id == id);
+      if (cohort == null)
+      {
+        return NotFound();
+      }
+      // find the top 4 concerened amounts, get all students that have that level or greater
+      var fourth = _context
+      .StudentProgresses
+      .Where(w => w.CohortId == id)
+      .Select(s => s.ConcernedLevel)
+      .Distinct()
+      .OrderByDescending(o => o)
+      .Take(4)
+      .Last();
 
 
+      var students = _context.StudentProgresses
+        .Include(i => i.Student)
+        .Where(w => w.CohortId == id && w.ConcernedLevel >= fourth)
+        .Select(s => new { s.Student.FullName, s.Student.Id, s.Student.GitHub, s.Student.PylonId, s.ConcernedLevel })
+        .OrderByDescending(o => o.ConcernedLevel);
+      return Ok(
+          new
+          {
+
+            students
+          }
+      );
     }
 
     // PUT: api/Cohort/5

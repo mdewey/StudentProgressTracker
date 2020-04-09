@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
@@ -7,19 +7,25 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import LinearProgress from '@material-ui/core/LinearProgress'
+
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   spaced: {
     width: '100%',
-    paddingTop: '1rem',
+    padding: '1rem',
   },
   quickTouch: {
     padding: '1rem',
   },
+  link: {
+    paddingTop: '1rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+  },
 })
 
-const StudentSearch = ({ students = [] }) => {
+const StudentSearch = ({ students = [], cohort = {} }) => {
   const classes = useStyles()
   const [studentId, setStudentId] = useState(0)
 
@@ -51,6 +57,10 @@ const StudentSearch = ({ students = [] }) => {
             </MenuItem>
           ))}
         </TextField>
+        <Divider />
+        <Link to={`/cohort/${cohort.id}`}>
+          <h5 className={classes.link}>View All Students</h5>
+        </Link>
       </Paper>
     )
   }

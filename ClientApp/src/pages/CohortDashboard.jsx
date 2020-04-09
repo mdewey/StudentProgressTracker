@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import auth from '../Auth'
 import TouchPointQuickAdd from '../components/TouchPointQuickAdd'
 import StudentSearch from '../components/StudentSearch'
-import ViewAllStudents from '../components/ViewAllStudents'
+import TopConcernedStudents from '../components/TopConcernedStudents'
 const useStyles = makeStyles({
   table: {
     width: '100%',
@@ -41,17 +41,26 @@ const CohortDashboard = props => {
           <TouchPointQuickAdd students={students} />
         </Grid>
         <Grid item sm={6}>
-          <StudentSearch students={students} />
-          <ViewAllStudents cohort={cohort} />
+          <StudentSearch students={students} cohort={cohort} />
+
+          <TopConcernedStudents cohort={cohort} />
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item sm={6}>
+          Touch points over 48 hours ago
+        </Grid>
+        <Grid item sm={6}>
+          <h3>total today</h3>5 most recent touch points
         </Grid>
       </Grid>
       {/* <section>
         Details
-        <section>Touch points over 48 hours ago</section>
+        <section></section>
         <section>
-          <h3>total today</h3>5 most recent touch points
+          
         </section>
-        <section>top concerned students</section>
+        <section></section>
       </section> */}
     </>
   )
