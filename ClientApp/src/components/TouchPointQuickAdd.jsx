@@ -18,6 +18,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '1rem',
+    width: '100%',
   },
   spaced: {
     margin: '1rem',

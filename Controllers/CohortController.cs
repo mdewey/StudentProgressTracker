@@ -91,7 +91,7 @@ namespace StudentLifeTracker.Controllers
 
       var students = _context.StudentProgresses
         .Include(i => i.Student)
-        .Where(w => w.CohortId == id && w.ConcernedLevel >= fourth)
+        .Where(w => w.CohortId == id && w.ConcernedLevel >= fourth && w.ConcernedLevel >= 5)
         .Select(s => new { s.Student.FullName, s.Student.Id, s.Student.GitHub, s.Student.PylonId, s.ConcernedLevel })
         .OrderByDescending(o => o.ConcernedLevel);
       return Ok(
