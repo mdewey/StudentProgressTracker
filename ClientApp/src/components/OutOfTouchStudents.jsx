@@ -5,6 +5,9 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
 import auth from '../Auth'
 
@@ -18,6 +21,9 @@ const useStyles = makeStyles({
     justifyContent: 'center',
   },
 })
+function ListItemLink(props) {
+  return <ListItem button component="Link" {...props} />
+}
 
 const OutOfTouchStudents = ({ cohort = {} }) => {
   const classes = useStyles()
@@ -43,21 +49,20 @@ const OutOfTouchStudents = ({ cohort = {} }) => {
         {!isLoading ? (
           <>
             <h3>Students not touched in 48 hours</h3>
-            <Grid container spacing={3}>
+            <List component="nav" aria-label="secondary mailbox folders">
               {students.map(student => {
-                const size =
-                  12 / Math.floor(students.length) < 1
-                    ? 1
-                    : 12 / Math.floor(students.length)
                 return (
-                  <Grid item sm={size} key={student.id}>
-                    <Link to={`/student/${student.id}`}>
-                      {student.fullName} ({student.lastTouchedadd})
-                    </Link>
-                  </Grid>
+                  <>
+                    <ListItem button>
+                      <ListItemText primary="Trash" />
+                    </ListItem>
+                    <ListItemLink to={`/student/${student.id}`}>
+                      <ListItemText primary={student.fullName} />
+                    </ListItemLink>
+                  </>
                 )
               })}
-            </Grid>
+            </List>
           </>
         ) : (
           <section className={classes.loader}>

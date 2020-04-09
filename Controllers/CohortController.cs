@@ -103,6 +103,46 @@ namespace StudentLifeTracker.Controllers
       );
     }
 
+    [HttpGet("{id}/no/touch")]
+    public async Task<ActionResult<Cohort>> GetOutTouchStudents(int id)
+    {
+      var cohort = await _context.Cohorts.FirstOrDefaultAsync(f => f.Id == id);
+      if (cohort == null)
+      {
+        return NotFound();
+      }
+      //find the students with no touch points or a touch point that is > 48 hours ago
+      var students = _context.StudentProgresses
+             .Include(i => i.Student)
+             .Where(w => w.CohortId == id)
+             .Select(s => s.Student).ToList();
+
+      var studentIds = students.Select(s => s.Id);
+
+
+      var latestTouchPoints = _context
+      .TouchPoints
+      .Where(w => studentIds.Contains(w.StudentId))
+      .OrderByDescending(o => o.Timestamp).ToList();
+
+      var latestPoints = new Dictionary<int, TouchPoint>();
+      foreach (var student in students)
+      {
+        var tp = latestTouchPoints.Where(w => w.StudentId == student.Id).OrderByDescending(o => o.Timestamp).FirstOrDefault();
+        latestPoints.Add(student.Id, tp);
+      }
+      DateTime threshold = DateTime.UtcNow.Date.AddDays(-2);
+      var thing = latestPoints.Where(w => w.Value == null || w.Value.Timestamp >= threshold).Select(s => s.Key);
+
+      var rv = students.Where(w => thing.Contains(w.Id));
+
+      return Ok(
+          new
+          {
+            students = rv
+          }
+      );
+    }
     // PUT: api/Cohort/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see https://aka.ms/RazorPagesCRUD.
