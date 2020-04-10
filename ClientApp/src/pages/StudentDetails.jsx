@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -10,6 +11,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import LinearProgress from '@material-ui/core/LinearProgress'
+
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -29,6 +36,19 @@ const useStyles = makeStyles(theme => ({
   textArea: {
     width: '100%',
   },
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+  container: {
+    height: '100vh',
+    width: '100wh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }))
 
 const StudentDetails = props => {
@@ -38,17 +58,24 @@ const StudentDetails = props => {
   const [report, setReport] = useState({})
   const [isChangePending, setIsChangePending] = useState(false)
   const [touchPoints, setTouchPoints] = useState([])
+  const [notFound, setNotFound] = useState(false)
   const { studentId } = props.match.params
 
   const getStudentData = async () => {
-    const resp = await axios.get(
-      `/api/student/${studentId}/data`,
-      auth.getHeader()
-    )
-    console.log(resp.data)
-    setStudent({ ...resp.data.student, studentProgresses: null })
-    setReport(resp.data.student.studentProgresses[0])
-    setTouchPoints(resp.data.touchPoints)
+    try {
+      const resp = await axios.get(
+        `/api/student/${studentId}/data`,
+        auth.getHeader()
+      )
+      console.log(resp.status)
+
+      console.log(resp.data)
+      setStudent({ ...resp.data.student, studentProgresses: null })
+      setReport(resp.data.student.studentProgresses[0])
+      setTouchPoints(resp.data.touchPoints)
+    } catch (error) {
+      setNotFound(true)
+    }
   }
 
   useEffect(() => {
@@ -112,9 +139,49 @@ const StudentDetails = props => {
     }
   }
 
+  const deleteStudent = async () => {
+    const resp = await axios.delete(
+      `/api/student/${student.id}`,
+      auth.getHeader()
+    )
+    if (resp.status === 200) {
+      setNotFound(true)
+    }
+  }
+
   useEffect(() => {
     saveProgressToServer(report, isChangePending)
   }, [report, isChangePending])
+
+  if (notFound) {
+    return (
+      <div className={classes.container}>
+        <Card className={classes.root}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="https://placekitten.com/345/140"
+              title="Contemplative Kitty"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                No Student here
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Link
+              to={
+                report.cohortId ? `/cohort/${report.cohortId}/dashboard` : '/'
+              }
+            >
+              Back To Cohort
+            </Link>
+          </CardActions>
+        </Card>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -269,7 +336,18 @@ const StudentDetails = props => {
             </Paper>
           </Grid>
         </Grid>
-        <section className="reports">{/* has1On1: false */}</section>
+        <Paper elevation={3} className={classes.section}>
+          <h5>Danger Zone</h5>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+            onClick={deleteStudent}
+          >
+            Delete (dropped)
+          </Button>
+        </Paper>
       </div>
     </>
   )
