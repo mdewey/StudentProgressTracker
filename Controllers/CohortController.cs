@@ -132,7 +132,7 @@ namespace StudentLifeTracker.Controllers
         latestPoints.Add(student.Id, tp);
       }
       DateTime threshold = DateTime.UtcNow.Date.AddDays(-2);
-      var thing = latestPoints.Where(w => w.Value == null || w.Value.Timestamp >= threshold).Select(s => s.Key);
+      var thing = latestPoints.Where(w => w.Value == null || w.Value.Timestamp <= threshold).Select(s => s.Key);
 
       var rv = students.Where(w => thing.Contains(w.Id));
 
