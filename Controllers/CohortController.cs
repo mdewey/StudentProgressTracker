@@ -120,7 +120,7 @@ namespace StudentLifeTracker.Controllers
       .Where(f => f.Id == id)
       .SelectMany(s => s.StudentProgress.Select(e => e.Student).SelectMany(l => l.Touchpoints))
       .Where(t => t.Timestamp.Day == DateTime.Now.Day)
-      .Select(s => new { s.Description, s.Id, s.StudentId, s.Student.FullName });
+      .Select(s => new { s.Description, s.Id, s.StudentId, s.Student.FullName, s.Timestamp });
 
       return Ok(todays);
 

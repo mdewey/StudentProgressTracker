@@ -60,7 +60,9 @@ const TodaysTouchPoints = ({ cohort = {} }) => {
                   <ListItemText
                     primary={
                       <>
-                        <b>thing!</b>
+                        <Link to={`/student/${point.studentId}`}>
+                          {point.fullName}
+                        </Link>
                       </>
                     }
                     secondary={
