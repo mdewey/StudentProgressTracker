@@ -10,6 +10,7 @@ import TouchPointQuickAdd from '../components/TouchPointQuickAdd'
 import StudentSearch from '../components/StudentSearch'
 import TopConcernedStudents from '../components/TopConcernedStudents'
 import OutOfTouchStudents from '../components/OutOfTouchStudents'
+import TodaysTouchPoints from '../components/TodaysTouchPoints'
 const useStyles = makeStyles({
   table: {
     width: '100%',
@@ -49,7 +50,7 @@ const CohortDashboard = props => {
       <Grid container spacing={3}>
         <OutOfTouchStudents cohort={cohort} />
         <Grid item sm={6}>
-          <h3>total today</h3>5 most recent touch points
+          <TodaysTouchPoints cohort={cohort} />
         </Grid>
       </Grid>
       {/* <section>
