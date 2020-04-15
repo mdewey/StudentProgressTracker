@@ -194,6 +194,14 @@ const StudentDetails = props => {
           <h1>{student.fullName}</h1>
           <nav className="student-nav">
             <Chip
+              label="back to cohort"
+              component="a"
+              href={
+                report.cohortId ? `/cohort/${report.cohortId}/dashboard` : '/'
+              }
+              clickable
+            />
+            <Chip
               label={student.gitHub}
               component="a"
               href={`https://www.github.com/${student.gitHub}`}
