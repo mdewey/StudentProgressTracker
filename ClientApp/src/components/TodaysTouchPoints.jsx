@@ -35,7 +35,10 @@ const TodaysTouchPoints = ({ cohort = {} }) => {
       setTouchPoints(resp.data)
       setIsLoading(false)
     }
-  }, [])
+    if (cohort.id) {
+      loadData()
+    }
+  }, [cohort.id])
 
   return (
     <Paper className={classes.section} elevation={5}>

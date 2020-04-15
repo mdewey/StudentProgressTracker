@@ -103,6 +103,29 @@ namespace StudentLifeTracker.Controllers
       );
     }
 
+
+    [HttpGet("{id}/touchpoints/today")]
+    public async Task<ActionResult<Cohort>> GetTodaysTouches(int id)
+    {
+      var cohort = await _context.Cohorts.FirstOrDefaultAsync(f => f.Id == id);
+      if (cohort == null)
+      {
+        return NotFound();
+      }
+      var todays = _context
+      .Cohorts
+      .Include(i => i.StudentProgress)
+      .ThenInclude(t => t.Student)
+      .ThenInclude(t => t.Touchpoints)
+      .Where(f => f.Id == id)
+      .SelectMany(s => s.StudentProgress.Select(e => e.Student).SelectMany(l => l.Touchpoints))
+      .Where(t => t.Timestamp.Day == DateTime.Now.Day)
+      .Select(s => new { s.Description, s.Id, s.StudentId, s.Student.FullName });
+
+      return Ok(todays);
+
+    }
+
     [HttpGet("{id}/no/touch")]
     public async Task<ActionResult<Cohort>> GetOutTouchStudents(int id)
     {
